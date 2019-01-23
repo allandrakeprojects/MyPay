@@ -718,7 +718,7 @@ namespace MyPay
                 string urlString = "https://api.telegram.org/bot{0}/sendMessage?chat_id={1}&text={2}";
                 string apiToken = "772918363:AAHn2ufmP3ocLEilQ1V-IHcqYMcSuFJHx5g";
                 string chatId = "@allandrake";
-                string text = "-----" + __brand_code + " " + __app + "-----%0A%0AIP:%20" + Properties.Settings.Default.______server_ip + "%0ALocation:%20" + Properties.Settings.Default.______server_location + "%0ADate%20and%20Time:%20[" + datetime + "]%0AMessage:%20" + message + "";
+                string text = "-----" + __brand_code + " " + __app + "-----%0A%0ADate%20and%20Time:%20[" + datetime + "]%0AMessage:%20" + message + "";
                 urlString = String.Format(urlString, apiToken, chatId, text);
                 WebRequest request = WebRequest.Create(urlString);
                 Stream rs = request.GetResponse().GetResponseStream();
