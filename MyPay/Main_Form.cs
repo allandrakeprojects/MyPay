@@ -360,7 +360,7 @@ namespace MyPay
             {
                 using (var wb = new WebClient())
                 {
-                    var result = await wb.DownloadDataTaskAsync("http://zeus.ssimakati.com:8080/API/lastMyPay");
+                    var result = await wb.DownloadDataTaskAsync("http://zeus.ssitex.com:8080/API/lastMyPay");
                     string responsebody = Encoding.UTF8.GetString(result);
                     var deserializeObject = JsonConvert.DeserializeObject(responsebody);
                     JObject jo = JObject.Parse(deserializeObject.ToString());
@@ -399,7 +399,7 @@ namespace MyPay
             {
                 using (var wb = new WebClient())
                 {
-                    var result = await wb.DownloadDataTaskAsync("http://zeus2.ssimakati.com:8080/API/lastMyPay");
+                    var result = await wb.DownloadDataTaskAsync("http://zeus2.ssitex.com:8080/API/lastMyPay");
                     string responsebody = Encoding.UTF8.GetString(result);
                     var deserializeObject = JsonConvert.DeserializeObject(responsebody);
                     JObject jo = JObject.Parse(deserializeObject.ToString());
@@ -616,7 +616,7 @@ namespace MyPay
                         ["token"] = token
                     };
 
-                    var response = wb.UploadValues("http://zeus.ssimakati.com:8080/API/fixMyPay", "POST", data);
+                    var response = wb.UploadValues("http://zeus.ssitex.com:8080/API/fixMyPay", "POST", data);
                     string responseInString = Encoding.UTF8.GetString(response);
 
                     using (StreamWriter file = new StreamWriter(Path.GetTempPath() + @"\fdgrab_mypay.txt", true, Encoding.UTF8))
@@ -671,7 +671,7 @@ namespace MyPay
                         ["token"] = token
                     };
 
-                    var response = wb.UploadValues("http://zeus2.ssimakati.com:8080/API/fixMyPay", "POST", data);
+                    var response = wb.UploadValues("http://zeus2.ssitex.com:8080/API/fixMyPay", "POST", data);
                     string responseInString = Encoding.UTF8.GetString(response);
 
                     using (StreamWriter file = new StreamWriter(Path.GetTempPath() + @"\fdgrab_mypay.txt", true, Encoding.UTF8))
@@ -849,7 +849,7 @@ namespace MyPay
                         ["token"] = token
                     };
 
-                    var response = wb.UploadValues("http://zeus.ssimakati.com:8080/API/updateAppStatus", "POST", data);
+                    var response = wb.UploadValues("http://zeus.ssitex.com:8080/API/updateAppStatus", "POST", data);
                     string responseInString = Encoding.UTF8.GetString(response);
                 }
             }
@@ -898,7 +898,7 @@ namespace MyPay
                         ["token"] = token
                     };
 
-                    var response = wb.UploadValues("http://zeus2.ssimakati.com:8080/API/updateAppStatus", "POST", data);
+                    var response = wb.UploadValues("http://zeus2.ssitex.com:8080/API/updateAppStatus", "POST", data);
                     string responseInString = Encoding.UTF8.GetString(response);
                 }
             }
