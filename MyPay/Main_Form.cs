@@ -247,8 +247,6 @@ namespace MyPay
                     Environment.Exit(0);
                 }
             }
-
-            Environment.Exit(0);
         }
 
         // Form Load
@@ -291,6 +289,12 @@ namespace MyPay
                                 SendPaymentTeam("The application have been logout, please re-login again.");
                                 SendMyBot("The application have been logout, please re-login again.");
                                 __send = 0;
+
+                                if (!Properties.Settings.Default.______is_send_telegram)
+                                {
+                                    __isClose = false;
+                                    Environment.Exit(0);
+                                }
                             }
 
                             __isLogin = false;
@@ -751,41 +755,44 @@ namespace MyPay
 
         private void SendPaymentTeam(string message)
         {
-            try
+            if (Properties.Settings.Default.______is_send_telegram)
             {
-                string datetime = DateTime.Now.ToString("dd MMM HH:mm:ss");
-                string urlString = "https://api.telegram.org/bot{0}/sendMessage?chat_id={1}&text={2}";
-                string apiToken = "612187347:AAE9doWWcStpWrDrfpOod89qGSxCJ5JwQO4";
-                string chatId = "@mypay_payment_team";
-                string text = "Date%20and%20Time:%20[" + datetime + "]%0AMessage:%20" + message + "";
-                urlString = String.Format(urlString, apiToken, chatId, text);
-                WebRequest request = WebRequest.Create(urlString);
-                Stream rs = request.GetResponse().GetResponseStream();
-                StreamReader reader = new StreamReader(rs);
-                string line = "";
-                StringBuilder sb = new StringBuilder();
-                while (line != null)
+                try
                 {
-                    line = reader.ReadLine();
-                    if (line != null)
+                    string datetime = DateTime.Now.ToString("dd MMM HH:mm:ss");
+                    string urlString = "https://api.telegram.org/bot{0}/sendMessage?chat_id={1}&text={2}";
+                    string apiToken = "612187347:AAE9doWWcStpWrDrfpOod89qGSxCJ5JwQO4";
+                    string chatId = "@mypay_payment_team";
+                    string text = "Date%20and%20Time:%20[" + datetime + "]%0AMessage:%20" + message + "";
+                    urlString = String.Format(urlString, apiToken, chatId, text);
+                    WebRequest request = WebRequest.Create(urlString);
+                    Stream rs = request.GetResponse().GetResponseStream();
+                    StreamReader reader = new StreamReader(rs);
+                    string line = "";
+                    StringBuilder sb = new StringBuilder();
+                    while (line != null)
                     {
-                        sb.Append(line);
+                        line = reader.ReadLine();
+                        if (line != null)
+                        {
+                            sb.Append(line);
+                        }
                     }
                 }
-            }
-            catch (Exception err)
-            {
-                __send++;
-                if (__send == 5)
+                catch (Exception err)
                 {
-                    MessageBox.Show(err.ToString());
+                    __send++;
+                    if (__send == 5)
+                    {
+                        MessageBox.Show(err.ToString());
 
-                    __isClose = false;
-                    Environment.Exit(0);
-                }
-                else
-                {
-                    SendPaymentTeam(message);
+                        __isClose = false;
+                        Environment.Exit(0);
+                    }
+                    else
+                    {
+                        SendPaymentTeam(message);
+                    }
                 }
             }
         }
@@ -922,6 +929,22 @@ namespace MyPay
                         ___DetectRunning();
                     }
                 }
+            }
+        }
+
+        private void panel1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (Properties.Settings.Default.______is_send_telegram)
+            {
+                Properties.Settings.Default.______is_send_telegram = false;
+                Properties.Settings.Default.Save();
+                MessageBox.Show("Telegram Notification is Disabled.", "MyPay", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                Properties.Settings.Default.______is_send_telegram = true;
+                Properties.Settings.Default.Save();
+                MessageBox.Show("Telegram Notification is Enabled.", "MyPay", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
